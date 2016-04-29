@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <!-- Bootstrap says:  The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+    <title>Weather</title>
+    <!-- Bootstrap -->
+    <link href=
+    "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+   
+</head>
+
+<body>
+    <div class="container-fluid">
+    	<div class = "row">
+    		<div class = "col-xs-12 weather-info">
+    			<h1>
+    				Weather Watch
+    			</h1>
+    			<h2 id = "users-coords">
+    				unable to obtain user location
+    			</h2>
+    			<div id = "current-weather">
+    				unable to reach api.openweathermap
+    			</div>
+    			<div id ="temperature">
+    				Temperature
+    			</div>
+				<div class="btn-group-xs" role="group" aria-label="...">
+  					<button type="button" class="btn btn-default">Celcius</button>
+  					<button type="button" class="btn btn-default">Farenheit</button>
+  					<button type="button" class="btn btn-default">Kelvin</button>
+				</div>
+    			<div id ="wind">
+    				wind speed and direction
+    			</div>
+    			<div id ="">
+    				sunrise, sunset
+    			</div>
+    			<div id = "weather-image">
+    				<img src = "http://placekitten.com/245/245" alt = "weather related image"><img>
+    			</div>
+    		</div>
+    	</div>
+    	
+    	
+ 	</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script> 
+    
+    <!-- Include all compiled bootstrap plugins (below), or include individual files as needed -->
+    <script src= "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> 
+    <script src="weather.js"> </script>
+</body>
+</html>
