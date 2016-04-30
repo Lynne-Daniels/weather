@@ -1,54 +1,10 @@
 /* Get the weather and update the page
 
  * 
- * TRY http://ip-api.com/json  
- * SAMPLE DATA:
- * 
- * {"as":"AS7922 Comcast Cable Communications, Inc.","city":"Palm Beach Gardens","country":"United States","countryCode":"US","isp":"Comcast Cable","lat":26.8539,"lon":-80.1898,"org":"Comcast Cable","query":"76.110.86.173","region":"FL","regionName":"Florida","status":"success","timezone":"America/New_York","zip":"33418"}
  * 
  * API CALL:  api.openweathermap.org/data/2.5/weather?zip=33418,us&appid=9edbccf035e35ac9403515d616122550 //my API key
  * SEE CODES:  http://openweathermap.org/current#current_JSON
- * SAMPLE DATA:
- * 
- * {
-    "coord": {
-        "lon": -80.14,
-        "lat": 26.82
-    },
-    "weather": [{
-        "id": 801,
-        "main": "Clouds",
-        "description": "few clouds",
-        "icon": "02n"
-    }],
-    "base": "cmc stations",
-    "main": {
-        "temp": 296.18,
-        "pressure": 1015,
-        "humidity": 69,
-        "temp_min": 295.37,
-        "temp_max": 297.15
-    },
-    "wind": {
-        "speed": 3.1,
-        "deg": 130
-    },
-    "clouds": {
-        "all": 20
-    },
-    "dt": 1461817392,
-    "sys": {
-        "type": 1,
-        "id": 734,
-        "message": 0.0101,
-        "country": "US",
-        "sunrise": 1461840251,
-        "sunset": 1461887522
-    },
-    "id": 4167519,
-    "name": "Palm Beach Gardens",
-    "cod": 200
-}
+
  * 
  */
 
@@ -61,6 +17,7 @@ var options = {
   enableHighAccuracy: false,
   timeout: 5000,
   maximumAge: 0
+ 
 };
 
 function success(pos) {
@@ -103,9 +60,23 @@ function getWeather() {$.ajax({
   .done(function( json ) {
      $("#users-coords").html(json.name);
      $( "#current-weather" ).text( json.weather[0].main + " " + json.weather[0].description);
-    console.log("ajax is done"+json.coord.lon);
-    console.log("length "+ json.properties);
-    console.log("json" + json.data);
+     // get temperatue in degrees Kelvin, use button group to control conversions to Farenheit and Centigrade
+     temperatureKelvin = Math.floor(json.main.temp);
+     
+     $("#temperature").text(json.main.temp);
+     $("#wind").text("Wind Speed:  " + json.wind.speed + " Direction:  " + json.wind.deg + " degrees" );
+     //transform a number into a date object
+     var sunriseDT = new Date(json.sys.sunrise*1000);
+     var sunsetDT = new Date(json.sys.sunset*1000);
+     
+     $("#sunrise-sunset").html("Sunrise: "+ sunriseDT.toLocaleString() + "<br> Sunset: " + (sunsetDT.toLocaleString()));
+    console.log("epoch to string " + sunriseDT.toLocaleString());
+    //console.log("length "+ json.properties);
+    //console.log("json" + json.data);
+    var weatherIcon = "http://openweathermap.org/img/w/" + json.weather[0].icon + ".png";
+    $("#weather-image").html('<img src = '+ weatherIcon + ' alt = "weather related image"><img>');
+    console.log(weatherIcon + " icon" + json.weather[0].icon);
+    
   })
   // Code to run if the request fails; the raw request and
   // status codes are passed to the function
@@ -120,3 +91,28 @@ function getWeather() {$.ajax({
     //alert( "The request is complete!" );
   });
 }
+//assign weather appropriate icon
+//var weatherIcon = "http://openweathermap.org/img/w/" + weatherIcon;
+
+
+
+// TODO case src is "http://openweathermap.org/img/w/10d.png"
+//event handlers for buttons
+ //clicked button color indicates initial units
+var  temperatureKelvin = 0;
+$(document).ready(function(){
+	
+    $('#celcius').on('click', function(e)
+    {
+		$("#temperature").text(temperatureKelvin - 273 + " C");
+    });
+        $('#farenheit').on('click', function(e)
+    {
+		$("#temperature").text(Math.floor(temperatureKelvin *9/5 - 460) + " F");
+    });
+        $('#kelvin').on('click', function(e)
+    {
+		$("#temperature").text(temperatureKelvin + " K");
+    });
+
+}); //doc ready
